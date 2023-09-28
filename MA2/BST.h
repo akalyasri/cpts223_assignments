@@ -123,6 +123,17 @@ protected:
 			deleteValueHelper(current, current->right, value);
 	}
 
+
+	void destroyTree(Node <T>* node){
+		if(nodePtr != nullptr){
+			  destroyTree(node->left);
+			  destroyTree(node->right);
+			  delete node;
+		}
+
+	}
+
+
 	/********************************* PUBLIC API *****************************/
 public:
 
@@ -132,8 +143,11 @@ public:
 	 * Destructor - Needs to free *all* nodes in the tree
 	 * TODO: Implement Destructor
 	 */
-	~BST() {
-	    cout << "TODO: Implement Destructor" << endl;
+	~BST() {	
+		//currently working 
+		cout << "Implement Destructor" << endl;
+		destroyTree(_root);
+
 	}
 
 	/* Public API */
