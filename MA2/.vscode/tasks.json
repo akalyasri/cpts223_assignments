@@ -7,7 +7,7 @@
 		"command": "cmake",
 		"args": [
 		  "--build",
-		  "${workspaceFolder}/MA2/build" // Adjust the path if necessary
+		  "${workspaceFolder}/build" // Adjust the path if necessary
 		],
 		"group": {
 		  "kind": "build",

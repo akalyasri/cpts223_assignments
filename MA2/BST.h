@@ -124,13 +124,33 @@ protected:
 	}
 
 
-	void destroyTree(Node <T>* node){
-		if(nodePtr != nullptr){
-			  destroyTree(node->left);
-			  destroyTree(node->right);
+	void destroyTreeHelper(Node <T>* node){
+		if(node != nullptr){
+			  destroyTreeHelper(node->left);
+			  destroyTreeHelper(node->right);
 			  delete node;
 		}
 
+	}
+
+	void printLevelOrderHelper(Node<T>* pCur){
+		//int height = 
+	}
+
+	bool containsHelper(Node<T>* pCur, T value){
+		if(pCur == nullptr){
+			return false;
+		}
+
+		if(value == pCur->value){
+			return true;
+
+		} else if(value < pCur->value){			
+			return containsHelper(pCur->left, value);
+
+		} else{
+			return containsHelper(pCur->right, value);
+		}
 	}
 
 
@@ -144,9 +164,10 @@ public:
 	 * TODO: Implement Destructor
 	 */
 	~BST() {	
-		//currently working 
-		cout << "Implement Destructor" << endl;
-		destroyTree(_root);
+		
+		cout << "Implementing Destructor..." << endl;
+		destroyTreeHelper(_root);
+		//debugged - works correctly
 
 	}
 
@@ -169,6 +190,8 @@ public:
 	 * TODO: Implement printLevelOrder
 	 */
 	void printLevelOrder() {
+		//currently working 
+
 		cout << "TODO: Implement printLevelOrder" << endl;
 	}
 
@@ -197,8 +220,10 @@ public:
 	 * TODO: Implement contains
 	 */
 	bool contains(T value) {
-	    cout << "TODO: Implement contains" << endl;
-		return numeric_limits<T>::min();
+	    //cout << "Implementing contains ..." << endl;
+		//return numeric_limits<T>::min();
+
+		return containsHelper(_root, value);
 	}
 };
 
