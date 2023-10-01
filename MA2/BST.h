@@ -126,6 +126,7 @@ protected:
 
 
 	void destroyTreeHelper(Node <T>* node){
+
 		if(node != nullptr){
 			  destroyTreeHelper(node->left);
 			  destroyTreeHelper(node->right);
@@ -207,6 +208,7 @@ public:
 		
 //		cout << "Implementing Destructor..." << endl;
 		destroyTreeHelper(_root);
+		//delete ;
 		//debugged - works correctly
 
 	}
