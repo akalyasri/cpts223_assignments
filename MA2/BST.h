@@ -134,8 +134,19 @@ protected:
 
 	}
 
-	void printLevelOrderHelper(Node<T>* pCur){
-		//int height = 
+	void printLevel(Node<T>* pCur, int level){
+		if(pCur == nullptr){
+			return;
+		}
+
+		if(level == 1){
+			cout << pCur->value << " ";
+		} else if (level > 1){
+			printLevel(pCur->left, level-1);
+			printLevel(pCur->right, level-1);
+		}
+
+		//cout<<endl;
 	}
 
 	bool containsHelper(Node<T>* pCur, T value){
@@ -159,32 +170,6 @@ protected:
 
 	void findMaxPath(Node<T>* pCur, vector<T>& currentP, vector<T>& longestP){
 		
-		//void findMaxPath(Node<T>* pCur, vector<T>& path){
-		//if(pCur == nullptr){
-		//	return;
-		//}
-
-		//vector<T> Lpath, Rpath;
-
-		//findMaxPath(pCur->left,Lpath);
-		//findMaxPath(pCur->right,Rpath);
-
-		//vector<T>& mPath = (Lpath.size() > Rpath.size()) ? Lpath : Rpath;
-
-		/*	if(Lpath.size() > Rpath.size()){
-				vector<T>& mPath = Lpath;
-			} else{
-				vector<T>& mPath = Rpath;
-			}
-		*/
-
-		//if(!mPath.empty() || pCur == _root){
-		//	mPath.push_back(pCur->value);
-		//}
-
-		//if(mPath.size() > path.size()){
-			//path = mPath;
-		//}
 
 		if(!pCur){
 			return;
@@ -207,7 +192,7 @@ protected:
 	}
 
 
-
+	
 
 
 	/********************************* PUBLIC API *****************************/
@@ -217,11 +202,10 @@ public:
 
 	/**
 	 * Destructor - Needs to free *all* nodes in the tree
-	 * TODO: Implement Destructor
 	 */
 	~BST() {	
 		
-		cout << "Implementing Destructor..." << endl;
+//		cout << "Implementing Destructor..." << endl;
 		destroyTreeHelper(_root);
 		//debugged - works correctly
 
@@ -243,12 +227,19 @@ public:
 
 	/**
 	 * Print the nodes level by level, starting from the root
-	 * TODO: Implement printLevelOrder
 	 */
 	void printLevelOrder() {
 		//currently working 
 
-		cout << "TODO: Implement printLevelOrder" << endl;
+		// cout << "TODO: Implement printLevelOrder" << endl;
+
+		int h = height();
+
+		for(int i = 1; i <= h+1; i++){
+			printLevel(_root, i);
+			cout<<endl;
+		}
+
 	}
 
 	int nodesCount() {
@@ -261,16 +252,8 @@ public:
 
 	/**
 	 * Print the maximum path in this tree
-	 * TODO: Implement printMaxPath
 	 */
 	void printMaxPath() {
-
-		//vector<T> maxPath;
-		//Node<T>* pCur = _root;
-		//findMaxPath(_root, maxPath);
-
-
-////
 
 		vector<T> Cpath, Lpath;
 		findMaxPath(_root,Cpath, Lpath);
@@ -287,7 +270,6 @@ public:
 
 	/**
 	 * Find if the BST contains the value
-	 * TODO: Implement contains
 	 */
 	bool contains(T value) {
 	    //cout << "Implementing contains ..." << endl;
