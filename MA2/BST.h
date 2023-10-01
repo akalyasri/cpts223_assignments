@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <limits>
+#include <vector>
 using namespace std;
 
 
@@ -154,6 +155,61 @@ protected:
 	}
 
 
+
+
+	void findMaxPath(Node<T>* pCur, vector<T>& currentP, vector<T>& longestP){
+		
+		//void findMaxPath(Node<T>* pCur, vector<T>& path){
+		//if(pCur == nullptr){
+		//	return;
+		//}
+
+		//vector<T> Lpath, Rpath;
+
+		//findMaxPath(pCur->left,Lpath);
+		//findMaxPath(pCur->right,Rpath);
+
+		//vector<T>& mPath = (Lpath.size() > Rpath.size()) ? Lpath : Rpath;
+
+		/*	if(Lpath.size() > Rpath.size()){
+				vector<T>& mPath = Lpath;
+			} else{
+				vector<T>& mPath = Rpath;
+			}
+		*/
+
+		//if(!mPath.empty() || pCur == _root){
+		//	mPath.push_back(pCur->value);
+		//}
+
+		//if(mPath.size() > path.size()){
+			//path = mPath;
+		//}
+
+		if(!pCur){
+			return;
+		}
+		
+		currentP.push_back(pCur->value);
+
+		if(!pCur->left && !pCur->right){
+			if(currentP.size() > longestP.size()){
+				longestP = currentP;
+			}
+		}
+
+		findMaxPath(pCur->left,currentP,longestP);
+		findMaxPath(pCur->right,currentP,longestP);
+
+		currentP.pop_back();
+
+		
+	}
+
+
+
+
+
 	/********************************* PUBLIC API *****************************/
 public:
 
@@ -208,7 +264,21 @@ public:
 	 * TODO: Implement printMaxPath
 	 */
 	void printMaxPath() {
-		cout << "TODO: Implement printMaxPath" << endl;
+
+		//vector<T> maxPath;
+		//Node<T>* pCur = _root;
+		//findMaxPath(_root, maxPath);
+
+
+////
+
+		vector<T> Cpath, Lpath;
+		findMaxPath(_root,Cpath, Lpath);
+
+		for(const T& i : Lpath){ //maxPath
+			cout << i << " ";
+		}
+		
 	}
 
 	bool deleteValue(T value) {
