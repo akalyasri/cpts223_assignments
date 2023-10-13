@@ -9,7 +9,7 @@
         
 
       {
-        "name": "Debug MA2",
+        "name": "Debug PA2",
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/build/PA2", // Path to your executable
