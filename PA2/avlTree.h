@@ -30,8 +30,21 @@ public:
         insertHelper(root, value);
     }
 
+    int heightOfTree(void){
 
+        int h = root->height;
 
+        return h;
+    }
+
+    int validate(void){
+        if (balanceFactor(root) == -1 || balanceFactor(root) == 1 || balanceFactor(root) == 0 ){
+            return 1;
+        }
+        
+        return 0;
+    }
+    
 private:
 
     avlNode<T>* root;
@@ -108,7 +121,7 @@ private:
             containsHelper(root->right, value);
         }
 
-
+        return false;
     }
 
     void Rrotation(avlNode<T>* &node){

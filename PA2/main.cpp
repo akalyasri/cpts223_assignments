@@ -26,7 +26,43 @@ int main(void){
         randomTree.insert(i);
     }
 
-    cout << "testing" <<endl;
+    //cout << "testing" <<endl;
+
+    cout << "Height of ascending tree : " << ascendTree.heightOfTree() << endl;
+    cout << "Height of decending tree : " << decendTree.heightOfTree() << endl;
+    cout << "Height of random-order tree : " << randomTree.heightOfTree() << endl;
+
+    cout << "validate ascending tree : " << ascendTree.validate() << endl;
+    cout << "validate decending tree : " << decendTree.validate() << endl;
+    cout << "validate random-order tree : " << randomTree.validate() << endl;
+
+
+    bool aResult, dResult, rResult;
+
+    for(int i = 0; i <= 100 ; i++){
+
+        aResult = ascendTree.contains(i);
+
+        if((i%2 == 0) && (aResult == 1)){
+            cout << "My AVL ascending tree implementation is incorrect" << endl;
+        }
+
+
+        dResult = decendTree.contains(i);
+
+        if((i%2 == 0) && (dResult == 1)){
+            cout << "My AVL decending tree implementation is incorrect" << endl;
+        }
+
+
+
+        rResult = randomTree.contains(i);
+
+        if((i%2 == 0) && (rResult == 1)){
+            cout << "My AVL random-order tree implementation is incorrect" << endl;
+        }
+
+    }
     
     return 0;
 }
