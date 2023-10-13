@@ -26,6 +26,7 @@ int main(void){
         randomTree.insert(i);
     }
 
+    cout << "testing" <<endl;
     
     return 0;
 }
