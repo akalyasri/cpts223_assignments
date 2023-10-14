@@ -9,6 +9,10 @@ public:
         root = nullptr;
     }
 
+    ~avlTree(){
+        destroyTree(root);
+    }
+
     bool contains(const T& value){
 
         return containsHelper(root, value);
@@ -48,6 +52,17 @@ public:
 private:
 
     avlNode<T>* root;
+
+    void destroyTree(avlNode<T>* node){
+
+        if(node != nullptr){
+
+            destroyTree(node->left);
+            destroyTree(node->right);
+
+            delete node;
+        }
+    }
 
     void printTreeHelper(avlNode<T>* node){
 
