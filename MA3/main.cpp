@@ -4,6 +4,11 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
+
+
+
+
     // Schema: UserName,Last,First,Email,NumTweets,MostViewedCategory
     string raw_data[5][6] = {{"rangerPower", "Smit", "Rick", "smitRick@gmail.com", "1117", "power lifting"},
                              {"kittyKat72", "Smith", "Kathryn", "kat@gmail.com", "56", "health"},
@@ -18,13 +23,76 @@ int main(int argc, char *argv[])
         twitter_data[i].setEmail(raw_data[i][3]);
         twitter_data[i].setNumTweets(stoi(raw_data[i][4]));
         twitter_data[i].setCategory(raw_data[i][5]);
+
+       
     }
 
 
-    //
-    // Your code goes here
-    //
 
+
+    // SCENARIO 1 *************************************************************
+
+    map<string, TwitterData> nameMap;
+    
+    for(int i = 0; i < 5; ++i){
+
+        nameMap[twitter_data[i].getUserName()] = twitter_data[i];
+    
+    }
+
+    for(const auto& entry : nameMap){
+
+        cout << "Key : " << entry.first << endl;
+        cout << "Value : " << entry.second.print() << endl;
+    }
+
+    string target = "savage1";
+
+    auto it = nameMap.find(target);
+
+    if(it != nameMap.end()){
+
+        cout << "User " << target << " : " << it->second.print() << " - DELETED" << endl; 
+        nameMap.erase(it);
+
+    } else {
+        cout << "Username not found" << endl;
+    }
+    
+    // SCENARIO 2 ********************************************************************
+
+    cout << endl << endl << endl <<endl;
+
+    map<string, TwitterData> emailMap;
+
+      for(int i = 0; i < 5; ++i){
+
+        emailMap[twitter_data[i].getUserName()] = twitter_data[i];
+    
+    }
+
+
+
+    for(const auto& entry : emailMap){
+
+        cout << "Key : " << entry.first << endl;
+        cout << "Value : " << entry.second.print() << endl;
+    }
+
+
+    string targetEmail = "kat@gmail.com";
+
+    it = emailMap.find(targetEmail);
+
+    if(it != emailMap.end()){
+
+        cout << "User email " << targetEmail << " : " << it->second.print() << " - DELETED" << endl; 
+        emailMap.erase(it);
+
+    } else {
+
+        cout << "User email not found" << endl;
+    }    
 
     return 0;
 }
