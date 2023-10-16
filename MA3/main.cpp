@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     for(const auto& entry : nameMap){
 
-        cout << "Key : " << entry.first << endl;
+        cout << "Key : " << entry.first << " || ";
         cout << "Value : " << entry.second.print() << endl;
     }
 
@@ -52,22 +52,24 @@ int main(int argc, char *argv[])
 
     if(it != nameMap.end()){
 
+        cout << endl;
         cout << "User " << target << " : " << it->second.print() << " - DELETED" << endl; 
         nameMap.erase(it);
 
     } else {
+        cout << endl;
         cout << "Username not found" << endl;
     }
     
     // SCENARIO 2 ********************************************************************
 
-    cout << endl << endl << endl <<endl;
+    cout << endl << endl << endl;
 
     map<string, TwitterData> emailMap;
 
       for(int i = 0; i < 5; ++i){
 
-        emailMap[twitter_data[i].getUserName()] = twitter_data[i];
+        emailMap[twitter_data[i].getEmail()] = twitter_data[i];
     
     }
 
@@ -75,7 +77,7 @@ int main(int argc, char *argv[])
 
     for(const auto& entry : emailMap){
 
-        cout << "Key : " << entry.first << endl;
+        cout << "Key : " << entry.first << " || ";
         cout << "Value : " << entry.second.print() << endl;
     }
 
@@ -86,11 +88,12 @@ int main(int argc, char *argv[])
 
     if(it != emailMap.end()){
 
+        cout << endl;
         cout << "User email " << targetEmail << " : " << it->second.print() << " - DELETED" << endl; 
         emailMap.erase(it);
 
     } else {
-
+        cout << endl;
         cout << "User email not found" << endl;
     }    
 
