@@ -20,40 +20,83 @@ template<typename K, typename V>
 class ProbingHash : public Hash<K,V> { // derived from Hash
 private:
     // Needs a table and a size.
+    //vector<pair<EntryState,pair<K,V>>> pTable;
+
+    vector<pair<K, V>> table; // Table for key-value pairs
+    vector<EntryState> states; // State of each table entry (EMPTY, VALID, DELETED)
+
     // Table should be a vector of std::pairs for lazy deletion
+    int currentSize;
 
 public:
-    ProbingHash(int n = 11) {
+    ProbingHash(int n = 11) {   
+
+        //tableSize = n;
+       // pTable.resize(findNextPrime(n),pair<EntryState,pair<K,V>>());
+       
+        int size = findNextPrime(n);
+        table.resize(size);
+        states.resize(size, EMPTY);
+
     }
 
     ~ProbingHash() {
+        // free table
         this->clear();
     }
 
     int size() {
-        return -1;
+        
+        return currentSize;
     }
 
     V operator[](const K& key) {
-        return -1;
+
+        int index = findPosition(key);
+        if (states[index] == VALID) {
+            return table[index].second;
+        }
+        throw std::out_of_range("Key not found");
     }
 
     bool insert(const std::pair<K, V>& pair) {
-        return true;
+
+        if (static_cast<float>(currentSize + 1) / table.size() > 0.75) {
+            rehash();
+        }
+
+        int index = findPosition(pair.first);
+        if (states[index] == EMPTY || states[index] == DELETED) {
+            table[index] = pair;
+            states[index] = VALID;
+            currentSize++;
+            return true;
+        }
+        return false; // Key already exists
+        
     }
 
     void erase(const K& key) {
+
+        int index = findPosition(key);
+        if (states[index] == VALID) {
+            states[index] = DELETED;
+            currentSize--;
+        }
     }
 
     void clear() {
+        table.clear();
+        states.clear();
+        currentSize = 0;
     }
 
     int bucket_count() {
-        return -1;
+        return table.size();
     }
 
     float load_factor() {
-        return -1;
+        return static_cast<float>(currentSize) / table.size();
     }
 
 private:
@@ -80,7 +123,62 @@ private:
     }
 
     int hash(const K& key) {
-        return 0;       
+        return std::hash<K>{}(key) % table.size();   
+    }
+/*
+    void rehash() {
+        int newSize = findNextPrime(2 * table.size());
+        vector<pair<K, V>> newTable(newSize, { K(), V() });
+
+        for (const auto& entry : table) {
+            if (states[findPosition(entry.first)] != VALID) {
+                int index = findPosition(entry.first);
+                newTable[index] = entry; // Copy entry into newTable
+            }
+        }
+
+        table = std::move(newTable);
+    }
+*/
+
+
+    void rehash() {
+        int newSize = findNextPrime(2 * table.size());
+
+        if (newSize <= table.size()) {
+            // Avoid resizing to a smaller size
+            return;
+        }
+
+        vector<pair<K, V>> newTable(newSize, { K(), V() });
+        vector<EntryState> newStates(newSize, EMPTY);
+
+        for (int i = 0; i < table.size(); i++) {
+            if (states[i] == VALID) {
+                // Reinsert the element with linear probing
+                int index = findPosition(table[i].first);
+                newTable[index] = table[i];
+                newStates[index] = VALID;
+            }
+        }
+
+        table = std::move(newTable);
+        states = std::move(newStates);
+    }
+
+    int findPosition(const K& key) {
+        int index = hash(key);
+        int offset = 1;
+
+        while (states[index] == VALID && table[index].first != key) {
+            index += offset;
+            offset++;
+            if (index >= table.size()) {
+                index -= table.size();
+            }
+        }
+
+        return index;
     }
     
 };
