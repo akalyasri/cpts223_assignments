@@ -34,6 +34,7 @@ private:
 
 public:
     ChainingHash(int n = 11) :currentSize(0) {
+        
         int size = findNextPrime(n);
         table.resize(size);
     }
@@ -49,8 +50,11 @@ public:
     V operator[](const K& key) {
 
         int index = hash(key);
+
         for (const auto& entry : table[index]) {
+
             if (entry.first == key) {
+
                 return entry.second;
             }
         }
@@ -61,16 +65,20 @@ public:
     bool insert(const std::pair<K, V>& pair) {
 
         int index = hash(pair.first);
+
         for (auto& entry : table[index]) {
+
             if (entry.first == pair.first) {
-                entry.second = pair.second;  // Update the value if the key already exists
+
+                entry.second = pair.second;  // update the value if the key already exists
                 return false;
             }
         }
+
         table[index].push_back(pair);
         currentSize++;
 
-        // Rehash if the load factor exceeds 0.75
+        // rehash if the load factor exceeds 0.75
         if (static_cast<float>(currentSize) / table.size() > 0.75) {
             rehash();
         }
@@ -79,10 +87,15 @@ public:
     }
 
     void erase(const K& key) {
+
         int index = hash(key);
+
         auto& entries = table[index];
+
         for (auto it = entries.begin(); it != entries.end(); ++it) {
+
             if (it->first == key) {
+
                 entries.erase(it);
                 currentSize--;
                 return;
@@ -91,15 +104,18 @@ public:
     }
 
     void clear() {
+
          table.clear();
         currentSize = 0;
     }
 
     int bucket_count() {
+
         return table.size();    
     }
 
     float load_factor() {
+
         return static_cast<float>(currentSize) / table.size();
     }
 
@@ -134,11 +150,14 @@ private:
     }
 
     void rehash() {
+
         int newSize = findNextPrime(2 * table.size());
         vector<list<pair<K, V>>> newTable(newSize);
 
         for (const auto& bucket : table) {
+
             for (const auto& entry : bucket) {
+
                 int index = std::hash<K>{}(entry.first) % newSize;
                 newTable[index].push_back(entry);
             }

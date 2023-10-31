@@ -22,8 +22,8 @@ private:
     // Needs a table and a size.
     //vector<pair<EntryState,pair<K,V>>> pTable;
 
-    vector<pair<K, V>> table; // Table for key-value pairs
-    vector<EntryState> states; // State of each table entry (EMPTY, VALID, DELETED)
+    vector<pair<K, V>> table; // table for key-value pairs
+    vector<EntryState> states; // state of each table entry (EMPTY, VALID, DELETED)
 
     // Table should be a vector of std::pairs for lazy deletion
     int currentSize;
@@ -126,14 +126,14 @@ private:
         return std::hash<K>{}(key) % table.size();   
     }
 /*
-    void rehash() {
+    void rehash() { // changed vector - doesnt work
         int newSize = findNextPrime(2 * table.size());
         vector<pair<K, V>> newTable(newSize, { K(), V() });
 
         for (const auto& entry : table) {
             if (states[findPosition(entry.first)] != VALID) {
                 int index = findPosition(entry.first);
-                newTable[index] = entry; // Copy entry into newTable
+                newTable[index] = entry;
             }
         }
 
@@ -146,7 +146,7 @@ private:
         int newSize = findNextPrime(2 * table.size());
 
         if (newSize <= table.size()) {
-            // Avoid resizing to a smaller size
+            // avoid resizing to a smaller size
             return;
         }
 
@@ -154,8 +154,10 @@ private:
         vector<EntryState> newStates(newSize, EMPTY);
 
         for (int i = 0; i < table.size(); i++) {
+
             if (states[i] == VALID) {
-                // Reinsert the element with linear probing
+
+                // reinsert the element with linear probing
                 int index = findPosition(table[i].first);
                 newTable[index] = table[i];
                 newStates[index] = VALID;
@@ -171,8 +173,10 @@ private:
         int offset = 1;
 
         while (states[index] == VALID && table[index].first != key) {
+
             index += offset;
             offset++;
+            
             if (index >= table.size()) {
                 index -= table.size();
             }
