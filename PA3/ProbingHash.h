@@ -72,7 +72,7 @@ public:
             currentSize++;
             return true;
         }
-        return false; // Key already exists
+        return false; // key already exists
         
     }
 
@@ -125,21 +125,6 @@ private:
     int hash(const K& key) {
         return std::hash<K>{}(key) % table.size();   
     }
-/*
-    void rehash() { // changed vector - doesnt work
-        int newSize = findNextPrime(2 * table.size());
-        vector<pair<K, V>> newTable(newSize, { K(), V() });
-
-        for (const auto& entry : table) {
-            if (states[findPosition(entry.first)] != VALID) {
-                int index = findPosition(entry.first);
-                newTable[index] = entry;
-            }
-        }
-
-        table = std::move(newTable);
-    }
-*/
 
 
     void rehash() {
@@ -176,7 +161,7 @@ private:
 
             index += offset;
             offset++;
-            
+
             if (index >= table.size()) {
                 index -= table.size();
             }

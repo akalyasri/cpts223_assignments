@@ -34,7 +34,7 @@ private:
 
 public:
     ChainingHash(int n = 11) :currentSize(0) {
-        
+
         int size = findNextPrime(n);
         table.resize(size);
     }
@@ -70,7 +70,7 @@ public:
 
             if (entry.first == pair.first) {
 
-                entry.second = pair.second;  // update the value if the key already exists
+                entry.second = pair.second;  //update the value if the key already exists
                 return false;
             }
         }
