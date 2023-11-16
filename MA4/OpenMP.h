@@ -80,26 +80,24 @@ void cal_max() {
     // The max found by your OpenMap should be identical to the max found by stl
     
     // your code goes here
-    #pragma omp parallel 
+#pragma omp parallel 
     {
-        int local_max = 0; // Each thread has its own local max
-
-        #pragma omp for
+        //each thread has its own local max
+        int localMax = 0; 
+ 
         for (int i = 0; i < data_size; ++i) {
-            #pragma omp critical
-            {
-                if (data[i] > local_max) {
-                    local_max = data[i];
-                }
+           
+            if (data[i] > localMax) {
+                localMax = data[i];
             }
+
+            if(localMax > max){
+                max = localMax;
+            }
+        
         }
 
-        #pragma omp critical
-        {
-            if (local_max > max) {
-                max = local_max;
-            }
-        }
+       
     }
 
     // OpenMP implementation: stop here
