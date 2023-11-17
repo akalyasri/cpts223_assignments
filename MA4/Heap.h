@@ -12,6 +12,7 @@
 #include <math.h>         // pow()
 #include <string>
 #include <limits>
+using std::move;
 
 /**
  *  Declaring Heap class
@@ -36,30 +37,26 @@ private:
 	{
 		// your code goes here
 		int child;
-		T tmp = std::move(_items[hole]); // Take the element at the hole
+		T tmp = move(_items[hole]); 
 
-		for (; hole * 2 <= size(); hole = child)
-		{
+		for (; hole * 2 <= size(); hole = child) {
 			child = hole * 2;
 
-			// Find the smaller child
-			if (child != size() && _items[child + 1] < _items[child])
-			{
+			
+			if (child != size() && _items[child + 1] < _items[child]) {
 				++child;
 			}
 
-			// Compare the child with the element we're moving down
-			if (_items[child] < tmp)
-			{
-				_items[hole] = std::move(_items[child]);
+			
+			if (_items[child] < tmp) {
+				_items[hole] = move(_items[child]);
 			}
-			else
-			{
+			else {
 				break;
 			}
 		}
 
-		_items[hole] = std::move(tmp); // Place the element in its correct position
+		_items[hole] = move(tmp); 
     }
 
 
@@ -71,18 +68,17 @@ private:
 	void percolateUp(T item)
 	{
     	// your code goes here
-		 _items.push_back(std::move(item)); // Add the item to the end
+		 _items.push_back(move(item)); 
 
-		unsigned int hole = size(); // Start at the end
+		unsigned int hole = size(); 
 
-		// Move the item up the heap until it's in the correct position
-		while (hole > 1 && item < _items[hole / 2])
-		{
-			_items[hole] = std::move(_items[hole / 2]);
+		
+		while (hole > 1 && item < _items[hole / 2]) {
+			_items[hole] = move(_items[hole / 2]);
 			hole /= 2;
 		}
 
-		_items[hole] = std::move(item); // Place the item in its correct position
+		_items[hole] = move(item); 
 	}
 
 /********************** End Microassigment zone *********************/
