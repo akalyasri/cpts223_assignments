@@ -36,19 +36,23 @@ private:
 	void percolateDown(unsigned int hole)
 	{
 		// your code goes here
+
 		int child;
 		T tmp = move(_items[hole]); 
 
 		for (; hole * 2 <= size(); hole = child) {
+			
 			child = hole * 2;
 
 			
 			if (child != size() && _items[child + 1] < _items[child]) {
+
 				++child;
 			}
 
 			
 			if (_items[child] < tmp) {
+
 				_items[hole] = move(_items[child]);
 			}
 			else {
@@ -68,12 +72,14 @@ private:
 	void percolateUp(T item)
 	{
     	// your code goes here
+
 		 _items.push_back(move(item)); 
 
 		unsigned int hole = size(); 
 
 		
 		while (hole > 1 && item < _items[hole / 2]) {
+
 			_items[hole] = move(_items[hole / 2]);
 			hole /= 2;
 		}
